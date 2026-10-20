@@ -9,6 +9,12 @@ Web divulgativa sobre por qué invertir a largo plazo frente a solo ahorrar, con
 
 **Ver la web:** https://santiagofernandezmarco.github.io/dinero-en-marcha/
 
+## Estructura
+
+- `index.html`: contenido de la página.
+- `styles.css`: diseño y adaptación a móvil.
+- `script.js`: contador de inflación, cálculo del interés compuesto, gráficos SVG y simulador.
+
 Hecha con HTML, CSS y JavaScript, sin librerías externas. Desarrollada con apoyo de herramientas de IA generativa.
 
 **Autor:** Santiago Fernández Marco · Estudiante de Ingeniería Matemática en CUNEF Universidad
