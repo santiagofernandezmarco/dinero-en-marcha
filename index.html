@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tu dinero no puede estar quieto</title>
+<meta name="description" content="Por qué invertir a largo plazo frente a solo ahorrar, con datos reales: inflación en directo, oro, S&P 500, una cartera diversificada y un simulador.">
+<meta name="author" content="Santiago Fernández Marco">
+<meta name="theme-color" content="#100904">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://santiagofernandezmarco.github.io/dinero-en-marcha/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Tu dinero no puede estar quieto">
+<meta property="og:description" content="Por qué invertir a largo plazo frente a solo ahorrar, con datos reales: inflación en directo, oro, S&P 500, una cartera diversificada y un simulador.">
+<meta property="og:url" content="https://santiagofernandezmarco.github.io/dinero-en-marcha/">
+<meta property="og:image" content="https://santiagofernandezmarco.github.io/dinero-en-marcha/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
+<style>
+/* Layout: full-bleed darkroom editorial. Each chapter owns a screen; a lone euro coin floats in the void; cream type, one ember accent. */
+:root{
+  --cream:#ffedd7;      /* Warm Cream: all text */
+  --void:#100904;       /* Walnut Shadow: canvas */
+  --bark:#382416;       /* Bark Brown: the one elevated surface */
+  --cork:#40372e;       /* Cork Border: dashed hairlines */
+  --drift:#6c5f51;      /* Driftwood: muted structure */
+  --ember:#dc5000;      /* Ember: editorial accent only */
+  --gold:#c8a35a;       /* chart only: gold series */
+  --cream-2:rgba(255,237,215,.62);
+  --cream-3:rgba(255,237,215,.38);
+  --f-ui:'Inter','Söhne','Neue Haas Grotesk',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --f-legal:Arial,system-ui,sans-serif;
+  --t-display:clamp(52px,10.5vw,168px);
+  --t-heading:clamp(36px,5.6vw,84px);
+  --t-sub:clamp(24px,2.6vw,41px);
+  --t-body:clamp(19px,2vw,29px);
+  --t-label:12px;
+  --gut:max(16px,env(safe-area-inset-left,0px));
+  --gut-r:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--void)}
+body{background:var(--void);color:var(--cream);font-family:var(--f-ui);font-feature-settings:"ss01" on;font-size:16px;line-height:1.26;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+p,h1,h2,h3,ul{margin:0}
+a{color:inherit}
+.up{text-transform:uppercase;font-weight:500}
+.label{font-size:var(--t-label);text-transform:uppercase;font-weight:500;letter-spacing:.06em;line-height:1.2}
+.ember{color:var(--ember)}
+.body{font-size:var(--t-body);font-weight:400;line-height:1.26;max-width:30ch;text-wrap:pretty}
+.muted{color:var(--cream-2)}
+h1,h2,h3{font-weight:500;text-transform:uppercase;line-height:.9;text-wrap:balance}
+h2{font-size:var(--t-heading)}
+.num{font-variant-numeric:tabular-nums;font-weight:500;line-height:.9;letter-spacing:-.01em}
+.dash{border:0;border-top:1px dashed var(--cork);margin:0}
+.pad{padding-left:var(--gut);padding-right:var(--gut-r)}
+:focus-visible{outline:2px solid var(--cream);outline-offset:4px}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:20;padding-top:env(safe-area-inset-top,0px);background:linear-gradient(var(--void),rgba(16,9,4,.0));}
+.nav .in{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:18px}
+.nav ul{display:flex;gap:24px;list-style:none;padding:0}
+.nav a{text-decoration:none}
+.nav ul a{padding-bottom:3px;border-bottom:1px dashed transparent}
+.nav ul a:hover,.nav ul a.on{border-bottom-color:var(--cream)}
+.side{position:fixed;right:calc(var(--gut-r) - 4px);top:50%;transform:translateY(-50%) rotate(90deg);transform-origin:right center;z-index:19;color:var(--cream-3);white-space:nowrap}
+
+/* chapters */
+.chap{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-block:clamp(96px,14vh,160px);position:relative}
+.chap + .chap{border-top:1px dashed var(--cork)}
+.three{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) minmax(0,1fr);gap:18px;align-items:center}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:end}
+.stack{display:flex;flex-direction:column;gap:18px;min-width:0}
+
+/* hero */
+.hero{min-height:100svh;padding-top:clamp(110px,16vh,180px)}
+.hero h1{font-size:var(--t-display);max-width:11ch}
+.hero .grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:end;margin-top:clamp(40px,7vh,88px)}
+.card{border-radius:12px;padding:24px;background:rgba(56,36,22,.55);border:1px solid var(--cork);display:flex;flex-direction:column;gap:14px;min-width:0}
+.meter .num{font-size:clamp(56px,8vw,112px)}
+.meter .cents{color:var(--cream-3)}
+.coin-wrap{position:absolute;right:clamp(-120px,-4vw,0px);top:clamp(70px,12vh,140px);width:clamp(260px,38vw,560px);aspect-ratio:1;pointer-events:none;max-width:100%}
+.coin{width:100%;height:100%;border-radius:50%;
+  background:
+    radial-gradient(circle at 68% 26%,rgba(255,237,215,.55),rgba(255,237,215,0) 34%),
+    radial-gradient(circle at 50% 50%,#2a1a10 0 52%,#4a301d 53% 55%,#22150c 56% 66%,#5a3b24 67% 69%,#1a100a 70%);
+  box-shadow:inset -18px -26px 60px rgba(0,0,0,.65),inset 14px 18px 40px rgba(255,237,215,.07);
+  display:grid;place-items:center;animation:spin 14s linear infinite}
+.coin span{font-size:clamp(90px,14vw,210px);font-weight:500;color:rgba(255,237,215,.14);line-height:1}
+.glow{position:absolute;inset:-18%;border-radius:50%;background:radial-gradient(circle,rgba(220,80,0,.16),rgba(220,80,0,0) 60%);}
+@keyframes spin{0%{transform:rotateY(0)}50%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
+
+/* problem */
+.erode{display:flex;align-items:flex-end;gap:18px;height:clamp(220px,34vh,340px)}
+.erode > div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;min-width:0}
+.bar{border-radius:12px 12px 0 0;width:100%}
+.bignum{font-size:clamp(64px,11vw,176px)}
+
+/* growth */
+.outcomes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:clamp(40px,6vh,72px)}
+.outcome{display:flex;flex-direction:column;gap:12px;padding-top:18px;border-top:1px dashed var(--cork);min-width:0}
+.outcome .num{font-size:clamp(34px,4.6vw,72px)}
+.outcome.hl .num{color:var(--ember)}
+.sw{display:inline-block;width:18px;height:2px;vertical-align:middle;margin-right:10px}
+
+/* chart */
+.chartbox{margin-top:clamp(32px,5vh,56px);width:100%}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart text{font-family:var(--f-ui);font-size:12px;fill:var(--cream-2);text-transform:uppercase;font-weight:500}
+.chart .end{font-size:13px;fill:var(--cream)}
+.chart .line{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.draw .line{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.8s cubic-bezier(.3,.7,.2,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* crashes */
+.crash{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1fr) minmax(0,1.3fr);gap:18px;align-items:baseline;padding-block:22px;border-top:1px dashed var(--cork)}
+.crash:last-child{border-bottom:1px dashed var(--cork)}
+.crash .num{font-size:clamp(44px,6.4vw,104px)}
+.crash .what{font-size:var(--t-sub);text-transform:uppercase;font-weight:500;line-height:.95}
+
+/* portfolio */
+.alloc{display:flex;height:clamp(64px,10vh,96px);border-radius:12px;overflow:hidden;margin-top:clamp(32px,5vh,56px);gap:3px}
+.alloc div{display:flex;align-items:flex-end;padding:12px;min-width:0}
+.pieces{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:24px}
+.piece{display:flex;flex-direction:column;gap:10px;min-width:0}
+.piece .num{font-size:clamp(40px,5vw,80px)}
+.piece p.d{font-size:17px;line-height:1.35;color:var(--cream-2);max-width:32ch}
+
+/* simulator */
+.sim{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:clamp(24px,4vw,64px);margin-top:clamp(32px,5vh,56px);align-items:start}
+.ctl{display:flex;flex-direction:column;gap:10px}
+.ctl label{display:flex;justify-content:space-between;gap:12px}
+.ctl output{font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:24px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--cream)}
+input[type=range]::-moz-range-track{height:1px;background:var(--cream)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--void);border:1px solid var(--cream);margin-top:-9px}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--void);border:1px solid var(--cream)}
+.toggle{display:inline-flex;align-items:center;gap:12px;cursor:pointer;border:1px solid var(--cream);border-radius:22.5px;padding:8px 16px;background:transparent;color:var(--cream);font:inherit}
+.toggle[aria-pressed="true"]{background:var(--bark);border-color:var(--bark)}
+.results{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.res{display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:1px dashed var(--cork);min-width:0}
+.res .num{font-size:clamp(24px,2.8vw,40px)}
+.res.hl .num{color:var(--ember)}
+.gap-line{margin-top:28px;font-size:var(--t-sub);font-weight:500;text-transform:uppercase;line-height:1}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:clamp(40px,6vh,72px)}
+.step{display:flex;flex-direction:column;gap:18px;padding-top:18px;border-top:1px dashed var(--cork);min-width:0}
+.step .n{font-size:clamp(56px,7vw,112px)}
+.step p{font-size:18px;line-height:1.35;color:var(--cream-2);max-width:30ch}
+.cta{display:inline-flex;align-self:flex-start;border-radius:36px;background:var(--bark);color:var(--cream);padding:14px 24px;text-decoration:none}
+
+/* footer */
+footer{padding-block:72px calc(48px + env(safe-area-inset-bottom,0px));border-top:1px dashed var(--cork);display:flex;flex-direction:column;gap:24px}
+footer ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px}
+footer li a{text-decoration:underline;text-decoration-color:var(--drift);text-underline-offset:4px}
+.legal{font-family:var(--f-legal);font-size:11px;text-transform:uppercase;font-weight:500;color:var(--cream-3);line-height:1.4;max-width:110ch}
+
+/* reveal: visible at rest, rises into place */
+@media (prefers-reduced-motion:no-preference){
+  .rv{transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+  .js .rv.pre{transform:translateY(36px)}
+}
+@media (prefers-reduced-motion:reduce){.coin{animation:none}.draw .line{animation:none;stroke-dashoffset:0}}
+
+@media (max-width:980px){
+  .three,.two,.hero .grid,.sim{grid-template-columns:minmax(0,1fr)}
+  .outcomes,.results,.pieces{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .side{display:none}
+  .coin-wrap{opacity:.55;right:-30%;top:90px;width:80vw}
+}
+@media (max-width:640px){
+  .nav ul{display:none}
+  .crash{grid-template-columns:minmax(0,1fr)}
+  .crash .num{order:-1}
+  footer ul{grid-template-columns:minmax(0,1fr)}
+  .chap{min-height:auto}
+}
+</style>
+</head>
+<body>
+<nav class="nav pad" aria-label="Secciones">
+  <div class="in">
+    <a href="#inicio" class="label">Dinero en marcha</a>
+    <ul class="label">
+      <li><a href="#inflacion">Inflación</a></li>
+      <li><a href="#invertir">Invertir</a></li>
+      <li><a href="#cartera">Cartera</a></li>
+      <li><a href="#simulador">Simulador</a></li>
+    </ul>
+  </div>
+</nav>
+<p class="side label" aria-hidden="true">S. Fernández Marco · Ed. 10/2026</p>
+
+<main>
+<header class="hero pad" id="inicio">
+  <div class="coin-wrap" aria-hidden="true"><div class="glow"></div><div class="coin"><span>€</span></div></div>
+  <div class="stack" style="position:relative;z-index:1">
+    <p class="label muted">Finanzas personales · Un proyecto de <span class="ember">Santiago Fernández Marco</span></p>
+    <h1 class="rv">Tu dinero no puede estar quieto.</h1>
+  </div>
+  <div class="grid" style="position:relative;z-index:1">
+    <p class="body rv">Ahorrar está bien. Dejar el dinero parado, no. Esta página explica, con datos reales, por qué invertir a largo plazo es la decisión financiera que más cambia tu futuro.</p>
+    <div class="card meter rv" aria-live="off">
+      <p class="label">Hoy, desde las 00:00, la inflación le ha quitado a 100.000 € parados</p>
+      <p class="num" id="lost">0,00&nbsp;€</p>
+      <hr class="dash">
+      <p class="label muted">IPC España, septiembre 2026: <span class="ember">4,9 %</span> · En un año: 4.671 € de poder de compra</p>
+    </div>
+  </div>
+</header>
+
+<section class="chap pad" id="inflacion">
+  <div class="two">
+    <div class="stack rv">
+      <p class="label ember">El problema</p>
+      <h2>El enemigo no hace ruido.</h2>
+      <p class="body muted">Nadie te quita un euro de la cuenta. Pero cada año ese euro compra menos. Con una inflación media del 3 %, en diez años 10.000 € valen lo que hoy 7.441 €.</p>
+      <p class="body muted">Una cuenta de ahorro media en España paga un 0,6 %. No llega ni para empatar.</p>
+    </div>
+    <div class="stack rv">
+      <div class="erode" role="img" aria-label="Poder de compra de 10.000 euros en diez años: 7.441 euros parados, 7.900 euros en una cuenta al 0,6 %">
+        <div><p class="num" style="font-size:clamp(24px,3vw,41px)">10.000 €</p><div class="bar" style="height:100%;background:var(--cream)"></div><p class="label muted">Hoy</p></div>
+        <div><p class="num" style="font-size:clamp(24px,3vw,41px)">7.900 €</p><div class="bar" style="height:79%;background:var(--drift)"></div><p class="label muted">Cuenta al 0,6 %<br>en 10 años</p></div>
+        <div><p class="num ember" style="font-size:clamp(24px,3vw,41px)">7.441 €</p><div class="bar" style="height:74%;background:var(--bark);border:1px solid var(--cork);border-bottom:0"></div><p class="label muted">Debajo del colchón<br>en 10 años</p></div>
+      </div>
+      <p class="label muted">Poder de compra en euros de hoy · inflación media supuesta del 3 %</p>
+    </div>
+  </div>
+</section>
+
+<section class="chap pad" id="invertir">
+  <div class="stack rv">
+    <p class="label ember">La respuesta</p>
+    <h2>10.000 €. Treinta años.<br>Cuatro destinos.</h2>
+    <p class="body muted" style="max-width:44ch">Lo mismo, invertido una sola vez y sin tocarlo, a la rentabilidad media histórica de cada opción.</p>
+  </div>
+  <div class="outcomes">
+    <div class="outcome rv"><p class="label"><i class="sw" style="background:var(--drift)"></i>Cuenta de ahorro</p><p class="num" data-r="0.006">11.966 €</p><p class="label muted">0,6 % anual</p></div>
+    <div class="outcome rv"><p class="label"><i class="sw" style="background:var(--gold)"></i>Oro</p><p class="num" data-r="0.08">100.627 €</p><p class="label muted">8 % anual desde 1971</p></div>
+    <div class="outcome hl rv"><p class="label"><i class="sw" style="background:var(--ember)"></i>Cartera diversificada</p><p class="num" data-r="0.079">97.869 €</p><p class="label muted">7,9 % anual estimado</p></div>
+    <div class="outcome rv"><p class="label"><i class="sw" style="background:var(--cream)"></i>S&amp;P 500</p><p class="num" data-r="0.10">174.494 €</p><p class="label muted">10 % anual desde 1957</p></div>
+  </div>
+  <div class="chartbox rv">
+    <svg class="chart" id="chartA" viewBox="0 0 1200 460" role="img" aria-label="Evolución de 10.000 euros durante 30 años en cuenta de ahorro, oro, cartera diversificada y S&amp;P 500"></svg>
+  </div>
+  <p class="label muted" style="margin-top:18px">Escenario con rentabilidad constante. Los mercados no suben en línea recta. Rentabilidades pasadas no garantizan rentabilidades futuras.</p>
+</section>
+
+<section class="chap pad" id="riesgo">
+  <div class="two" style="align-items:start">
+    <div class="stack rv">
+      <p class="label ember">El precio de la rentabilidad</p>
+      <h2>Las caídas llegan. Y se superan.</h2>
+    </div>
+    <p class="body muted rv">Más rentabilidad significa más sustos por el camino. La historia enseña lo mismo una y otra vez: quien vendió en pánico perdió. Quien esperó, recuperó y siguió creciendo.</p>
+  </div>
+  <div style="margin-top:clamp(32px,5vh,56px)">
+    <div class="crash rv"><p class="what">Crisis financiera<br><span class="label muted">S&amp;P 500 · 2007–2009</span></p><p class="num">−57 %</p><p class="label muted">Volvió a máximos en marzo de 2013. Unos cinco años y medio.</p></div>
+    <div class="crash rv"><p class="what">Pandemia<br><span class="label muted">S&amp;P 500 · 2020</span></p><p class="num">−34 %</p><p class="label muted">Volvió a máximos en agosto de 2020. Seis meses.</p></div>
+    <div class="crash rv"><p class="what">Inflación y tipos<br><span class="label muted">S&amp;P 500 · 2022</span></p><p class="num">−25 %</p><p class="label muted">Volvió a máximos en enero de 2024. Dos años.</p></div>
+    <div class="crash rv"><p class="what">El oro también cae<br><span class="label muted">Oro · 1980–2008</span></p><p class="num" style="color:var(--gold)">−65 %</p><p class="label muted">Tardó 28 años en recuperar su máximo de 1980. Por eso no se apuesta todo a una sola carta.</p></div>
+  </div>
+</section>
+
+<section class="chap pad" id="cartera">
+  <div class="two" style="align-items:start">
+    <div class="stack rv">
+      <p class="label ember">La cartera</p>
+      <h2>No se trata de acertar. Se trata de repartir.</h2>
+    </div>
+    <p class="body muted rv">Una cartera diversificada no es la que más gana en un año bueno. Es la que mejor aguanta los malos, para que no abandones a mitad de camino.</p>
+  </div>
+  <div class="alloc rv" role="img" aria-label="Reparto: 60 % bolsa mundial, 10 % mercados emergentes, 20 % bonos, 10 % oro">
+    <div style="flex:60;background:var(--ember)"><span class="label" style="color:var(--void)">60 %</span></div>
+    <div style="flex:10;background:var(--cream)"><span class="label" style="color:var(--void)">10 %</span></div>
+    <div style="flex:20;background:var(--drift)"><span class="label">20 %</span></div>
+    <div style="flex:10;background:var(--gold)"><span class="label" style="color:var(--void)">10 %</span></div>
+  </div>
+  <div class="pieces">
+    <div class="piece rv"><p class="num ember">60 %</p><p class="label">Bolsa mundial desarrollada</p><p class="d">Unas 1.300 grandes empresas de 23 países, al estilo del índice MSCI World. Es el motor de crecimiento.</p><p class="label muted">Histórico ≈ 9 % anual</p></div>
+    <div class="piece rv"><p class="num">10 %</p><p class="label">Mercados emergentes</p><p class="d">China, India, Taiwán o Brasil. Economías que crecen más rápido, con más vaivenes.</p><p class="label muted">Histórico ≈ 9 % anual</p></div>
+    <div class="piece rv"><p class="num" style="color:var(--cream-2)">20 %</p><p class="label">Bonos en euros</p><p class="d">Deuda de gobiernos y empresas. Rinde menos, pero amortigua las caídas de la bolsa.</p><p class="label muted">Supuesto prudente: 4 % anual</p></div>
+    <div class="piece rv"><p class="num" style="color:var(--gold)">10 %</p><p class="label">Oro</p><p class="d">El refugio clásico frente a crisis e inflación. Suele subir cuando todo lo demás baja.</p><p class="label muted">Histórico ≈ 8 % anual</p></div>
+  </div>
+  <p class="label muted rv" style="margin-top:32px">Rentabilidad media ponderada estimada: <span class="ember">7,9 % anual</span> · Cartera de ejemplo con fines divulgativos</p>
+</section>
+
+<section class="chap pad" id="simulador">
+  <div class="stack rv">
+    <p class="label ember">Simulador</p>
+    <h2>Tu caso, en tus números.</h2>
+    <p class="body muted" style="max-width:44ch">Mueve los controles y compara qué pasa con el mismo dinero según dónde lo pongas.</p>
+  </div>
+  <div class="sim">
+    <form class="stack" id="simForm" aria-label="Parámetros del simulador" style="gap:28px">
+      <div class="ctl"><label class="label" for="ini">Inversión inicial <output id="iniO" for="ini"></output></label><input type="range" id="ini" min="0" max="100000" step="1000" value="10000"></div>
+      <div class="ctl"><label class="label" for="mes">Aportación mensual <output id="mesO" for="mes"></output></label><input type="range" id="mes" min="0" max="2000" step="50" value="200"></div>
+      <div class="ctl"><label class="label" for="anos">Años <output id="anosO" for="anos"></output></label><input type="range" id="anos" min="1" max="45" step="1" value="30"></div>
+      <button type="button" class="toggle label" id="real" aria-pressed="false">Ver en euros de hoy</button>
+      <p class="label muted" id="realNote">Valores nominales. Activa la opción para descontar una inflación media del 2,5 %.</p>
+    </form>
+    <div class="stack" style="min-width:0">
+      <div class="results">
+        <div class="res"><p class="label"><i class="sw" style="background:var(--drift)"></i>Cuenta</p><p class="num" id="rC">–</p></div>
+        <div class="res"><p class="label"><i class="sw" style="background:var(--gold)"></i>Oro</p><p class="num" id="rO">–</p></div>
+        <div class="res hl"><p class="label"><i class="sw" style="background:var(--ember)"></i>Cartera</p><p class="num" id="rP">–</p></div>
+        <div class="res"><p class="label"><i class="sw" style="background:var(--cream)"></i>S&amp;P 500</p><p class="num" id="rS">–</p></div>
+      </div>
+      <svg class="chart" id="chartB" viewBox="0 0 1000 420" role="img" aria-label="Simulación de tu inversión en el tiempo"></svg>
+      <p class="gap-line">Invertir en la cartera en lugar de ahorrar: <span class="ember" id="diff">–</span> más.</p>
+      <p class="label muted">Aportado en total: <span id="paid">–</span>. Rentabilidad constante y capitalización mensual. Elegir productos de bajo coste, por debajo del 0,3 % anual, protege este resultado.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chap pad" id="empezar">
+  <div class="stack rv">
+    <p class="label ember">Empezar</p>
+    <h2>Tres pasos.<br>Esta semana.</h2>
+  </div>
+  <div class="steps">
+    <div class="step rv"><p class="num n">1</p><p class="label">Colchón primero</p><p>Guarda de 3 a 6 meses de gastos en una cuenta. Ese dinero no se invierte: es tu tranquilidad.</p></div>
+    <div class="step rv"><p class="num n">2</p><p class="label">Reparte</p><p>Construye una cartera diversificada con fondos o ETF indexados de bajo coste, en una entidad regulada.</p></div>
+    <div class="step rv"><p class="num n">3</p><p class="label">Automatiza y espera</p><p>Programa una aportación mensual, aunque sea pequeña. No mires el saldo a diario y no vendas en las caídas.</p></div>
+  </div>
+  <div class="two rv" style="margin-top:clamp(56px,9vh,104px);align-items:center">
+    <p class="up" style="font-size:var(--t-sub);line-height:.95">El mejor momento para empezar fue hace diez años. El segundo mejor es hoy.</p>
+    <a class="cta label" href="#simulador">Vuelve a calcular tu caso</a>
+  </div>
+</section>
+</main>
+
+<footer class="pad">
+  <p class="label">Fuentes</p>
+  <ul class="label muted">
+    <li><a href="https://www.ine.es/dyngs/Prensa/IPC0926.htm" target="_blank" rel="noopener">INE · IPC septiembre 2026 (4,9 %)</a></li>
+    <li><a href="https://www.vozpopuli.com/economia/banca/la-banca-pago-en-2024-cuatro-veces-menos-por-los-depositos-en-espana-que-en-el-extranjero-.html" target="_blank" rel="noopener">Banco de España · Remuneración media de depósitos 2024 (0,6 %)</a></li>
+    <li><a href="https://smartasset.com/investing/sp-500-average-annual-return" target="_blank" rel="noopener">S&amp;P 500 · ≈ 10,4 % anual 1957–2025, dividendos reinvertidos</a></li>
+    <li><a href="https://gold.org/goldhub/research/relevance-of-gold-as-a-strategic-asset/golds-key-attributes-1-return" target="_blank" rel="noopener">World Gold Council · Oro ≈ 8 % anual 1971–2023</a></li>
+    <li><a href="https://chartrow.com/msci-world/trailing-returns" target="_blank" rel="noopener">MSCI World · Rentabilidades históricas</a></li>
+    <li><a href="https://or.indexologyblog.com/2023/01/09/do-friendly-bears-exist/" target="_blank" rel="noopener">S&amp;P Dow Jones Indices · Caídas de 2008 (−57 %) y 2020 (−34 %)</a></li>
+  </ul>
+  <hr class="dash">
+  <p class="legal">* Contenido divulgativo elaborado por Santiago Fernández Marco como proyecto personal. No constituye asesoramiento financiero ni recomendación de inversión. Las proyecciones usan medias históricas redondeadas y supuestos propios (bonos 4 %, inflación media 2,5 %); toda inversión conlleva riesgo de pérdida.</p>
+</footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  const fmt=(v,d=0)=>v.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d})+' €';
+  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Inflation meter: 100.000 € losing purchasing power at 4,9 % a year, since local midnight */
+  const lost=document.getElementById('lost');
+  const perMs=100000*(1-1/1.049)/(365*24*3600*1000);
+  function meter(){
+    const now=new Date(), mid=new Date(now); mid.setHours(0,0,0,0);
+    const v=perMs*(now-mid); const s=fmt(v,4);
+    const i=s.lastIndexOf(',');
+    lost.innerHTML=s.slice(0,i+3)+'<span class="cents">'+s.slice(i+3)+'</span>';
+  }
+  meter(); RM?setInterval(meter,1000):(function loop(){meter();requestAnimationFrame(loop)})();
+
+  /* Series */
+  const SER=[
+    {k:'C',name:'Cuenta',r:.006,c:'var(--drift)',w:2},
+    {k:'O',name:'Oro',r:.08,c:'var(--gold)',w:2},
+    {k:'S',name:'S&P 500',r:.10,c:'var(--cream)',w:2},
+    {k:'P',name:'Cartera',r:.079,c:'var(--ember)',w:4}
+  ];
+  function series(ini,mes,years,annual){
+    const r=Math.pow(1+annual,1/12)-1; let v=ini; const out=[v];
+    for(let m=1;m<=years*12;m++){ v=v*(1+r)+mes; if(m%12===0) out.push(v); }
+    return out;
+  }
+  const NS='http://www.w3.org/2000/svg';
+  function niceTick(max){ const raw=max/4; const p=Math.pow(10,Math.floor(Math.log10(raw))); const m=raw/p; return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p; }
+  const kfmt=v=>v>=1e6?(v/1e6).toLocaleString('es-ES',{maximumFractionDigits:1})+' M':v>=1000?Math.round(v/1000).toLocaleString('es-ES')+'k':String(Math.round(v));
+  function draw(svg,data,W,H,animate){
+    const L=8,R=150,T=24,B=40; const n=data[0].vals.length-1;
+    const max=Math.max(...data.flatMap(d=>d.vals),1); const tick=niceTick(max); const top=Math.ceil(max/tick)*tick;
+    const x=i=>L+(W-L-R)*(n?i/n:0), y=v=>T+(H-T-B)*(1-v/top);
+    let s='';
+    for(let g=tick; g<=top+1e-9; g+=tick){ s+=`<line x1="${L}" x2="${W-R}" y1="${y(g)}" y2="${y(g)}" stroke="var(--cork)" stroke-dasharray="3 5"/><text x="${L}" y="${y(g)-8}">${kfmt(g)} €</text>`; }
+    s+=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--drift)"/>`;
+    const xs=n<=10?1:n<=25?5:10; for(let i=0;i<=n;i+=xs){ s+=`<text x="${x(i)}" y="${H-12}" text-anchor="${i===0?'start':'middle'}">${i===0?'Hoy':'Año '+i}</text>`; }
+    const ends=[];
+    data.forEach(d=>{
+      const p=d.vals.map((v,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1)).join(' ');
+      s+=`<path class="line" d="${p}" stroke="${d.c}" stroke-width="${d.w}" ${d.dash?'stroke-dasharray="6 6"':''}/>`;
+      s+=`<circle cx="${x(n)}" cy="${y(d.vals[n])}" r="${d.w+1.5}" fill="${d.c}"/>`;
+      ends.push({y:y(d.vals[n]),t:d.name+' · '+kfmt(d.vals[n])+' €',c:d.c});
+    });
+    ends.sort((a,b)=>a.y-b.y); for(let i=1;i<ends.length;i++){ if(ends[i].y-ends[i-1].y<20) ends[i].y=ends[i-1].y+20; }
+    const over=ends.length?ends[ends.length-1].y-(H-B-4):0; if(over>0) ends.forEach(e=>e.y-=over);
+    ends.forEach(e=>{ s+=`<text class="end" x="${W-R+14}" y="${e.y+4}" style="fill:${e.c}">${e.t}</text>`; });
+    svg.innerHTML=s;
+    if(animate&&!RM){ svg.querySelectorAll('.line').forEach(l=>{ l.style.setProperty('--len',Math.ceil(l.getTotalLength())); }); svg.classList.remove('draw'); void svg.getBBox(); svg.classList.add('draw'); }
+  }
+
+  /* Chart A: 10.000 € lump sum, 30 years */
+  const svgA=document.getElementById('chartA');
+  const dataA=SER.map(d=>({...d,vals:series(10000,0,30,d.r)}));
+  draw(svgA,dataA,1200,460,false);
+
+  /* Simulator */
+  const ids=['ini','mes','anos']; const el={}; ids.forEach(i=>el[i]=document.getElementById(i));
+  const realBtn=document.getElementById('real'); let real=false;
+  const svgB=document.getElementById('chartB');
+  function update(){
+    const ini=+el.ini.value, mes=+el.mes.value, n=+el.anos.value;
+    document.getElementById('iniO').textContent=fmt(ini);
+    document.getElementById('mesO').textContent=fmt(mes);
+    document.getElementById('anosO').textContent=n+(n===1?' año':' años');
+    const defl=i=>real?Math.pow(1.025,i):1;
+    const data=SER.map(d=>({...d,vals:series(ini,mes,n,d.r).map((v,i)=>v/defl(i))}));
+    data.forEach(d=>document.getElementById('r'+d.k).textContent=fmt(d.vals[n]));
+    const C=data.find(d=>d.k==='C').vals[n], P=data.find(d=>d.k==='P').vals[n];
+    document.getElementById('diff').textContent=fmt(Math.max(0,P-C));
+    document.getElementById('paid').textContent=fmt(ini+mes*12*n);
+    document.getElementById('realNote').textContent=real?'En euros de hoy, descontando una inflación media del 2,5 % anual.':'Valores nominales. Activa la opción para descontar una inflación media del 2,5 %.';
+    draw(svgB,data,1000,420,false);
+  }
+  ids.forEach(i=>el[i].addEventListener('input',update));
+  realBtn.addEventListener('click',()=>{ real=!real; realBtn.setAttribute('aria-pressed',real); realBtn.textContent=real?'Ver en euros nominales':'Ver en euros de hoy'; update(); });
+  document.getElementById('simForm').addEventListener('submit',e=>e.preventDefault());
+  update();
+
+  /* Reveal + chart draw on scroll (elements are visible at rest; they only rise into place) */
+  if('IntersectionObserver' in window && !RM){
+    const vh=innerHeight;
+    document.querySelectorAll('.rv').forEach(e=>{ if(e.getBoundingClientRect().top>vh) e.classList.add('pre'); });
+    const io=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.remove('pre'); io.unobserve(en.target);} }),{threshold:.12});
+    document.querySelectorAll('.rv.pre').forEach(e=>io.observe(e));
+    let drawn=false;
+    const io2=new IntersectionObserver(es=>{ if(es[0].isIntersecting&&!drawn){ drawn=true; draw(svgA,dataA,1200,460,true); io2.disconnect(); } },{threshold:.35});
+    io2.observe(svgA);
+    /* active nav */
+    const links=[...document.querySelectorAll('.nav ul a')];
+    const io3=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+en.target.id)); } }),{rootMargin:'-45% 0px -50% 0px'});
+    ['inflacion','invertir','cartera','simulador'].forEach(id=>io3.observe(document.getElementById(id)));
+  }
+})();
+</script>
+</body>
+</html>
